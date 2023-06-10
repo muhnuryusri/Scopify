@@ -2,11 +2,18 @@ package com.example.scopify.data.data_source.local.room
 
 import androidx.room.*
 import com.example.scopify.data.data_source.local.entity.ArticleEntity
+import com.example.scopify.data.data_source.local.entity.CategoryEntity
 import com.example.scopify.data.data_source.local.entity.SourceEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NewsDao {
+    @Query("SELECT * FROM categories")
+    fun getCategories(): Flow<List<CategoryEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE, entity = CategoryEntity::class)
+    suspend fun saveCategories(categories: List<CategoryEntity>)
+
     @Query("SELECT * FROM sources")
     fun getSources(): Flow<List<SourceEntity>>
 

@@ -12,7 +12,6 @@ data class SourceEntity (
     @field:SerializedName("country")
     val country: String? = null,
 
-    @PrimaryKey
     @field:SerializedName("name")
     val name: String? = null,
 
@@ -22,6 +21,7 @@ data class SourceEntity (
     @field:SerializedName("language")
     val language: String? = null,
 
+    @PrimaryKey
     @field:SerializedName("id")
     val id: String? = null,
 
