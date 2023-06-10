@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 
 class RemoteDataSource constructor(private val apiService: ApiService){
-    suspend fun getSources(categoryId: String): Flow<ApiResponse<List<SourcesItem?>>> {
+    suspend fun getSources(categoryId: String): Flow<ApiResponse<List<SourcesItem>>> {
         return flow {
             try {
                 val response = apiService.getSources(categoryId, API_KEY)
@@ -36,7 +36,7 @@ class RemoteDataSource constructor(private val apiService: ApiService){
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getArticles(sourceId: String): Flow<ApiResponse<List<ArticlesItem?>>> {
+    suspend fun getArticles(sourceId: String): Flow<ApiResponse<List<ArticlesItem>>> {
         return flow {
             try {
                 val response = apiService.getArticles(sourceId, API_KEY)
