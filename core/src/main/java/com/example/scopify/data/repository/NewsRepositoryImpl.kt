@@ -6,7 +6,6 @@ import com.example.scopify.data.data_source.local.LocalDataSource
 import com.example.scopify.data.data_source.remote.RemoteDataSource
 import com.example.scopify.data.data_source.remote.api.ApiResponse
 import com.example.scopify.data.data_source.remote.response.ArticlesItem
-import com.example.scopify.data.data_source.remote.response.SourceResponse
 import com.example.scopify.data.data_source.remote.response.SourcesItem
 import com.example.scopify.domain.entity.Article
 import com.example.scopify.domain.entity.Category
@@ -17,56 +16,56 @@ import com.example.scopify.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NewsRepositoryImpl (
+@Singleton
+class NewsRepositoryImpl @Inject constructor (
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : NewsRepository {
     override fun getCategories(): Flow<Resource<List<Category>>> {
-        return object : NetworkBoundResource<List<Category>, List<Category>>(appExecutors) {
-            override fun loadFromFromDb(): Flow<List<Category>> {
-                return localDataSource.getCategories().map {
-                    DataMapper.mapEntityToDomainCategory(it)
-                }
-            }
+        val categories = listOf(
+            Category("all", "All"),
+            Category("business", "Business"),
+            Category("entertainment", "Entertainment"),
+            Category("general", "General"),
+            Category("health", "Health"),
+            Category("science", "Science"),
+            Category("sports", "Sports"),
+            Category("technology", "Technology")
+        )
 
-            override fun shouldFetch(data: List<Category>?): Boolean =
-                data == null || data.isEmpty()
-
-            override suspend fun createCall(): Flow<ApiResponse<List<Category>>> =
-                flow { emit(ApiResponse.Empty) }
-
-            override suspend fun saveCallResult(data: List<Category>) {
-                val categories = listOf(
-                    Category("business", "Business"),
-                    Category("entertainment", "Entertainment"),
-                    Category("general", "General"),
-                    Category("health", "Health"),
-                    Category("science", "Science"),
-                    Category("sports", "Sports"),
-                    Category("technology", "Technology")
-                )
-
-                val categoryEntity = DataMapper.mapDomainToEntityCategory(categories)
-                localDataSource.saveCategories(categoryEntity)
-            }
-        }.asFlow()
+        return flow {
+            emit(Resource.Success(categories))
+        }
     }
 
     override fun getSources(categoryId: String): Flow<Resource<List<Source>>> {
         return object : NetworkBoundResource<List<Source>, List<SourcesItem>>(appExecutors) {
             override fun loadFromFromDb(): Flow<List<Source>> {
-                return localDataSource.getSources().map {
-                    DataMapper.mapEntityToDomainSource(it)
+                return if (categoryId == "all") {
+                    localDataSource.getAllSources().map {
+                        DataMapper.mapEntityToDomainSource(it)
+                    }
+                } else {
+                    localDataSource.getSources(categoryId).map {
+                        DataMapper.mapEntityToDomainSource(it)
+                    }
                 }
             }
 
             override fun shouldFetch(data: List<Source>?): Boolean =
                 data == null || data.isEmpty()
 
-            override suspend fun createCall(): Flow<ApiResponse<List<SourcesItem>>> =
-                remoteDataSource.getSources(categoryId)
+            override suspend fun createCall(): Flow<ApiResponse<List<SourcesItem>>> {
+                return if (categoryId == "all") {
+                    remoteDataSource.getAllSources()
+                } else {
+                    remoteDataSource.getSources(categoryId)
+                }
+            }
 
             override suspend fun saveCallResult(data: List<SourcesItem>) {
                 val sources = DataMapper.mapResponseToEntitySource(data)
@@ -79,7 +78,7 @@ class NewsRepositoryImpl (
     override fun getArticles(sourceId: String): Flow<Resource<List<Article>>> {
         return object : NetworkBoundResource<List<Article>, List<ArticlesItem>>(appExecutors) {
             override fun loadFromFromDb(): Flow<List<Article>> {
-                return localDataSource.getArticles().map {
+                return localDataSource.getArticles(sourceId).map {
                     DataMapper.mapEntityToDomainArticle(it)
                 }
             }

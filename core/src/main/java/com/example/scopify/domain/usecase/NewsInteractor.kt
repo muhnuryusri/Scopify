@@ -1,13 +1,9 @@
 package com.example.scopify.domain.usecase
 
-import com.example.scopify.data.Resource
-import com.example.scopify.domain.entity.Article
-import com.example.scopify.domain.entity.Category
-import com.example.scopify.domain.entity.Source
 import com.example.scopify.domain.repository.NewsRepository
-import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NewsInteractor constructor(private val newsRepository: NewsRepository): NewsUseCase {
+class NewsInteractor @Inject constructor(private val newsRepository: NewsRepository): NewsUseCase {
     override fun getCategories() = newsRepository.getCategories()
 
     override fun getSources(categoryId: String) = newsRepository.getSources(categoryId)
