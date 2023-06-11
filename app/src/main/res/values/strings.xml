@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Scopify</string>
+    <string name="home_title">Hello 👋</string>
+    <string name="home_asking">What would you like to read today?</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="category_title">Category</string>
+    <string name="source_title">Source</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet</string>
+    <string name="category">Category</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="no_search_found">No search found</string>
+    <string name="please_select_category_first">Please select category first</string>
 </resources>
