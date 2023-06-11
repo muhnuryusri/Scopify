@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
 }
 
@@ -19,7 +20,7 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
-        buildConfigField("String", "API_KEY", "\"fb161f1efe49412bab24f44e3f2a6a67\"")
+        buildConfigField("String", "API_KEY", "\"46c6705a6a914e54a9b56b725c7c210c\"")
     }
 
     buildTypes {
