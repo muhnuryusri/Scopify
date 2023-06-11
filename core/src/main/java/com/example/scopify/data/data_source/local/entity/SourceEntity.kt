@@ -10,24 +10,24 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "sources")
 data class SourceEntity (
     @field:SerializedName("country")
-    val country: String? = null,
+    val country: String?,
 
     @field:SerializedName("name")
-    val name: String? = null,
+    val name: String?,
 
     @field:SerializedName("description")
-    val description: String? = null,
+    val description: String?,
 
     @field:SerializedName("language")
-    val language: String? = null,
+    val language: String?,
 
     @PrimaryKey
     @field:SerializedName("id")
-    val id: String? = null,
+    val id: String,
 
     @field:SerializedName("category")
-    val category: String? = null,
+    val category: String?,
 
     @field:SerializedName("url")
-    val url: String? = null
+    val url: String?
 ) : Parcelable

@@ -4,34 +4,36 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.scopify.data.data_source.remote.response.Source
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "articles")
 data class ArticleEntity(
     @ColumnInfo("publishedAt")
-    val publishedAt: String? = null,
+    val publishedAt: String?,
 
     @ColumnInfo("author")
-    val author: String? = null,
+    val author: String?,
 
     @ColumnInfo("urlToImage")
-    val urlToImage: String? = null,
+    val urlToImage: String?,
 
     @ColumnInfo("description")
-    val description: String? = null,
+    val description: String?,
+
+    @ColumnInfo("source_id")
+    val sourceId: String?,
+
+    @ColumnInfo("source_name")
+    val sourceName: String?,
 
     @PrimaryKey
-    @ColumnInfo("source")
-    val source: Source? = null,
-
     @ColumnInfo("title")
-    val title: String? = null,
+    val title: String,
 
     @ColumnInfo("url")
-    val url: String? = null,
+    val url: String?,
 
     @ColumnInfo("content")
-    val content: String? = null
+    val content: String?
 ) : Parcelable

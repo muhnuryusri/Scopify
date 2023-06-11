@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("top-headlines/sources")
     suspend fun getSources(
-        @Query("category") categoryId: String,
+        @Query("category") categoryId: String? = null,
         @Query("apiKey") apiKey: String,
     ) : SourceResponse
 

@@ -1,39 +1,13 @@
 package com.example.scopify.utils
 
 import com.example.scopify.data.data_source.local.entity.ArticleEntity
-import com.example.scopify.data.data_source.local.entity.CategoryEntity
 import com.example.scopify.data.data_source.local.entity.SourceEntity
 import com.example.scopify.data.data_source.remote.response.ArticlesItem
 import com.example.scopify.data.data_source.remote.response.SourcesItem
 import com.example.scopify.domain.entity.Article
-import com.example.scopify.domain.entity.Category
 import com.example.scopify.domain.entity.Source
 
 object DataMapper {
-    fun mapEntityToDomainCategory(input: List<CategoryEntity>): List<Category> {
-        val categories = ArrayList<Category>()
-        input.map {
-            val category = Category(
-                id = it.id,
-                category = it.category
-            )
-            categories.add(category)
-        }
-        return categories
-    }
-
-    fun mapDomainToEntityCategory(input: List<Category>): List<CategoryEntity> {
-        val categories = ArrayList<CategoryEntity>()
-        input.map {
-            val category = CategoryEntity(
-                id = it.id,
-                category = it.category
-            )
-            categories.add(category)
-        }
-        return categories
-    }
-
     fun mapResponseToEntitySource(input: List<SourcesItem>): List<SourceEntity> {
         val sources = ArrayList<SourceEntity>()
         input.map {
@@ -69,7 +43,9 @@ object DataMapper {
                 url = it.url,
                 urlToImage = it.urlToImage,
                 publishedAt = it.publishedAt,
-                content = it.content
+                content = it.content,
+                sourceId = it.source.id,
+                sourceName = it.source.name
             )
             articles.add(source)
         }
@@ -82,7 +58,10 @@ object DataMapper {
                 author = it.author,
                 title = it.title,
                 url = it.url,
-                urlToImage = it.urlToImage
+                urlToImage = it.urlToImage,
+                date = it.publishedAt,
+                sourceId = it.sourceId,
+                sourceName = it.sourceName
             )
         }
 }

@@ -8,33 +8,33 @@ import com.google.gson.annotations.SerializedName
 data class SourceResponse(
 
 	@field:SerializedName("sources")
-	val sources: List<SourcesItem>? = null,
+	val sources: List<SourcesItem>,
 
 	@field:SerializedName("status")
-	val status: String? = null
+	val status: String
 ) : Parcelable
 
 @Parcelize
 data class SourcesItem(
 
 	@field:SerializedName("country")
-	val country: String? = null,
+	val country: String,
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	val name: String,
 
 	@field:SerializedName("description")
-	val description: String? = null,
+	val description: String,
 
 	@field:SerializedName("language")
-	val language: String? = null,
+	val language: String,
 
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String,
 
 	@field:SerializedName("category")
-	val category: String? = null,
+	val category: String,
 
 	@field:SerializedName("url")
-	val url: String? = null
+	val url: String
 ) : Parcelable
